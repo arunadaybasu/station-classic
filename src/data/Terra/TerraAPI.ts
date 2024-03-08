@@ -38,7 +38,7 @@ export const useTerraAPIURL = (mainnet?: true) => {
 export const useIsTerraAPIAvailable = () => {
   const url = useTerraAPIURL()
   // const url = "https://terra-classic-public-api.publicnode.com"
-  console.log(url)
+  // console.log(url)
   return !!url
 }
 
