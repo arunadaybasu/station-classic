@@ -5,7 +5,7 @@ import BigNumber from "bignumber.js"
 import { OracleParams, ValAddress, Validator } from "@terra-money/terra.js"
 import { TerraValidator } from "types/validator"
 import { TerraProposalItem } from "types/proposal"
-import { useNetwork } from "data/wallet"
+// import { useNetwork } from "data/wallet"
 import { useOracleParams } from "data/queries/oracle"
 import { useNetworks } from "app/InitNetworks"
 import { queryKey, RefetchOptions } from "../query"
@@ -28,14 +28,16 @@ export enum AggregateWallets {
 }
 
 export const useTerraAPIURL = (mainnet?: true) => {
-  const network = useNetwork()
+  // const network = useNetwork()
   const networks = useNetworks()
-  console.log(network, networks)
-  return mainnet ? networks["mainnet"].api : network.api
+  // console.log(network, networks)
+  // return mainnet ? networks["classic"].api : network.api
+  return networks["classic"].api
 }
 
 export const useIsTerraAPIAvailable = () => {
   const url = useTerraAPIURL()
+  // const url = "https://terra-classic-public-api.publicnode.com"
   console.log(url)
   return !!url
 }
@@ -45,7 +47,7 @@ export const useTerraAPI = <T>(path: string, params?: object, fallback?: T) => {
   const available = useIsTerraAPIAvailable()
   const shouldFallback = !available && fallback
 
-  console.log(baseURL, available, shouldFallback)
+  // console.log(path, params, baseURL, available, shouldFallback)
 
   return useQuery<T, AxiosError>(
     [queryKey.TerraAPI, baseURL, path, params],
@@ -66,6 +68,8 @@ export const useGasPrices = () => {
   const mainnet = useTerraAPIURL(true)
   const baseURL = current ?? mainnet
   const path = "/gas-prices"
+
+  // console.log(current, mainnet, baseURL, path)
 
   return useQuery(
     [queryKey.TerraAPI, baseURL, path],
