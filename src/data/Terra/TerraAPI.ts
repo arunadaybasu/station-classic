@@ -30,11 +30,13 @@ export enum AggregateWallets {
 export const useTerraAPIURL = (mainnet?: true) => {
   const network = useNetwork()
   const networks = useNetworks()
+  console.log(network, networks)
   return mainnet ? networks["mainnet"].api : network.api
 }
 
 export const useIsTerraAPIAvailable = () => {
   const url = useTerraAPIURL()
+  console.log(url)
   return !!url
 }
 
@@ -42,6 +44,8 @@ export const useTerraAPI = <T>(path: string, params?: object, fallback?: T) => {
   const baseURL = useTerraAPIURL()
   const available = useIsTerraAPIAvailable()
   const shouldFallback = !available && fallback
+
+  console.log(baseURL, available, shouldFallback)
 
   return useQuery<T, AxiosError>(
     [queryKey.TerraAPI, baseURL, path, params],
