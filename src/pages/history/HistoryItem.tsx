@@ -27,6 +27,7 @@ const HistoryItem = ({ txhash, timestamp, ...props }: AccountHistoryItem) => {
       extra={<ToNow>{new Date(timestamp)}</ToNow>}
       size="small"
       bordered
+      className="history-list-data-item"
     >
       {msgs?.map((msg, index) => (
         <HistoryMessage msg={msg} success={success} key={index} />

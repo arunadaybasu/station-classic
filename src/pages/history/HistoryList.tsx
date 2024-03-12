@@ -7,7 +7,7 @@ import { useAddress } from "data/wallet"
 import { useTerraAPIURL } from "data/Terra/TerraAPI"
 import { Button } from "components/general"
 import { Card, Col, Page } from "components/layout"
-// import {Scrollbar} from 'smooth-scrollbar-react';
+import { Scrollbar } from "smooth-scrollbar-react"
 import { Empty } from "components/feedback"
 import HistoryItem from "./HistoryItem"
 
@@ -55,13 +55,20 @@ const HistoryList = () => {
       </Card>
     ) : (
       <Col>
-        {pages.map(({ list }, i) => (
-          <Fragment key={i}>
-            {list.map((item) => (
-              <HistoryItem {...item} key={item.txhash} />
+        <Scrollbar alwaysShowTracks={true}>
+          <div
+            className="history-list-data"
+            style={{ height: "600px", paddingRight: "15px" }}
+          >
+            {pages.map(({ list }, i) => (
+              <Fragment key={i}>
+                {list.map((item) => (
+                  <HistoryItem {...item} key={item.txhash} />
+                ))}
+              </Fragment>
             ))}
-          </Fragment>
-        ))}
+          </div>
+        </Scrollbar>
 
         <Button
           onClick={() => fetchNextPage()}
