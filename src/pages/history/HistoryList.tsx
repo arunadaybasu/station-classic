@@ -7,6 +7,7 @@ import { useAddress } from "data/wallet"
 import { useTerraAPIURL } from "data/Terra/TerraAPI"
 import { Button } from "components/general"
 import { Card, Col, Page } from "components/layout"
+// import {Scrollbar} from 'smooth-scrollbar-react';
 import { Empty } from "components/feedback"
 import HistoryItem from "./HistoryItem"
 
