@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { atom, useRecoilState } from "recoil"
 import { Proposal } from "@terra-money/terra.js"
-import { combineState } from "data/query"
+// import { combineState } from "data/query"
 import { useProposals, useProposalStatusItem } from "data/queries/gov"
-import { useTerraAssets } from "data/Terra/TerraAssets"
+// import { useTerraAssets } from "data/Terra/TerraAssets"
 import { Col, Card } from "components/layout"
 import PaginationButtons from "components/layout/PaginationButtons"
 import { Fetching, Empty } from "components/feedback"
-import { Toggle } from "components/form"
+// import { Toggle } from "components/form"
 import ProposalItem from "./ProposalItem"
 import GovernanceParams from "./GovernanceParams"
-import { useNetworkName } from "data/wallet"
+// import { useNetworkName } from "data/wallet"
 import styles from "./ProposalsByStatus.module.scss"
 
 const DefaultGovernancePaginationState = {
@@ -28,15 +28,15 @@ const governancePaginationState = atom({
 
 const ProposalsByStatus = ({ status }: { status: Proposal.Status }) => {
   const { t } = useTranslation()
-  const networkName = useNetworkName()
+  // const networkName = useNetworkName()
 
-  const { data: whitelistData, ...whitelistState } = useTerraAssets<{
-    [key: string]: number[]
-  }>("/station/proposals.json")
-  const whitelist = whitelistData?.[networkName]
+  // const { data: whitelistData, ...whitelistState } = useTerraAssets<{
+  //   [key: string]: number[]
+  // }>("/station/proposals.json")
+  // const whitelist = whitelistData?.[networkName]
 
-  const [showAll, setShowAll] = useState(!!whitelist)
-  const toggle = () => setShowAll((state) => !state)
+  // const [showAll, setShowAll] = useState(!!whitelist)
+  // const toggle = () => setShowAll((state) => !state)
 
   const pagination = 6
   const [paginationState, setPaginationState] = useRecoilState(
@@ -86,7 +86,8 @@ const ProposalsByStatus = ({ status }: { status: Proposal.Status }) => {
 
   const { label } = useProposalStatusItem(status)
 
-  const state = combineState(whitelistState, proposalState)
+  // const state = combineState(whitelistState, proposalState)
+  const state = proposalState
 
   /* pagination */
   const handleNext = () => {
@@ -136,12 +137,15 @@ const ProposalsByStatus = ({ status }: { status: Proposal.Status }) => {
   }
 
   const render = () => {
-    if (!(proposalData && whitelistData)) return null
+    // if (!(proposalData && whitelistData)) return null
+    if (!proposalData) return null
 
-    const proposals =
-      status === Proposal.Status.PROPOSAL_STATUS_VOTING_PERIOD && !showAll
-        ? proposalData.filter(({ id }) => whitelist?.includes(id))
-        : proposalData
+    // const proposals =
+    //   status === Proposal.Status.PROPOSAL_STATUS_VOTING_PERIOD && !showAll
+    //     ? proposalData.filter(({ id }) => whitelist?.includes(id))
+    //     : proposalData
+
+    const proposals = proposalData
 
     return !proposals.length ? (
       <>
@@ -163,7 +167,8 @@ const ProposalsByStatus = ({ status }: { status: Proposal.Status }) => {
               className={styles.link}
               key={item.id}
             >
-              <ProposalItem proposal={item} showVotes={!showAll} />
+              {/*<ProposalItem proposal={item} showVotes={!showAll} />*/}
+              <ProposalItem proposal={item} showVotes={true} />
             </Card>
           ))}
         </section>
@@ -178,14 +183,14 @@ const ProposalsByStatus = ({ status }: { status: Proposal.Status }) => {
   return (
     <Fetching {...state}>
       <Col>
-        {!!whitelist &&
+        {/*!!whitelist &&
           status === Proposal.Status.PROPOSAL_STATUS_VOTING_PERIOD && (
             <section>
               <Toggle checked={showAll} onChange={toggle}>
                 {t("Show all")}
               </Toggle>
             </section>
-          )}
+          )*/}
 
         {render()}
       </Col>

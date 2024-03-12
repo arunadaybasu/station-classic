@@ -13,6 +13,7 @@ import ProposalVotes from "./ProposalVotes"
 import ProposalVotesByValidator from "./ProposalVotesByValidator"
 import ProposalParams from "./ProposalParams"
 import useProposalId from "./useProposalId"
+import { Scrollbar } from "smooth-scrollbar-react"
 
 const ProposalDetails = () => {
   const { t } = useTranslation()
@@ -73,7 +74,14 @@ const ProposalDetails = () => {
       title={t("Proposal details")}
       extra={proposal && <ProposalActions proposal={proposal} />}
     >
-      {render()}
+      <Scrollbar alwaysShowTracks={true}>
+        <div
+          className="history-list-data"
+          style={{ height: "600px", paddingRight: "15px" }}
+        >
+          {render()}
+        </div>
+      </Scrollbar>
     </Page>
   )
 }

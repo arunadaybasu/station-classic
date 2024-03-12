@@ -8,9 +8,9 @@ const ChangeNow = () => {
     <Page title={t("Exchange")} small>
       <Card>
         <p>
-          Coming Soon - Exchange APIs enable swap between non-related currencies
-          such as $LUNC & $BTC using an exchange rather than a blockchain
-          contract.
+          Coming Soon - Exchange APIs enable swaps between non-related
+          currencies such as $LUNC & $BTC (which are not on the same blockchain)
+          using an exchange rather than a blockchain contract as the broker.
         </p>
       </Card>
     </Page>
