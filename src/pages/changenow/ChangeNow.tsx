@@ -7,8 +7,32 @@ import axios from "axios"
 
 const ChangeNow = () => {
   // const { t } = useTranslation()
-  var optionsFrom: Option[] = useMemo(() => [], [])
-  var optionsTo: Option[] = useMemo(() => [], [])
+  var optionsFrom: Option[] = useMemo(
+    () => [
+      {
+        id: "1",
+        value: "BTC",
+        label: "Bitcoin",
+        image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg",
+        base: "BTC",
+        quote: "USDT",
+      },
+    ],
+    []
+  )
+  var optionsTo: Option[] = useMemo(
+    () => [
+      {
+        id: "1",
+        value: "BTC",
+        label: "Bitcoin",
+        image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg",
+        base: "BTC",
+        quote: "USDT",
+      },
+    ],
+    []
+  )
 
   const baseUrlMiddleware = "http://localhost:5737/"
   const [loading, setLoading] = useState(true)
@@ -26,13 +50,13 @@ const ChangeNow = () => {
         )
         console.log(response.result.length)
         for (var i = 0; response.result.length; i++) {
-          optionsFrom.push({
+          optionsFrom[i] = {
             id: i + 1 + "",
             value: response.result[i].ticker,
             label: response.result[i].name,
             image: response.result[i].image,
             base: response.result[i].ticker,
-          })
+          }
         }
       } catch (error) {
         console.error(error.message)
@@ -43,44 +67,41 @@ const ChangeNow = () => {
     fetchDataFrom()
   }, [optionsFrom])
 
-  // useEffect(() => {
-  //   const fetchDataTo = async () => {
-  //     setLoading(true)
-  //     try {
-  //       const { data: response } = await axios.get(
-  //         baseUrlMiddleware + "exchangeapi/changenow/pairs-for?ticker=btc"
-  //       )
-  //       console.log(response.result)
-  //       for (var i = 0; response.result.length; i++) {
-  //         if (response.result[i].ticker === response.result[i].network) {
-  //           optionsTo.push({
-  //             id: i + 1 + "",
-  //             value: response.result[i].ticker,
-  //             label: response.result[i].name,
-  //             image: response.result[i].image,
-  //             base: response.result[i].ticker,
-  //           })
-  //         }
-  //         else {
-  //           optionsTo.push({
-  //             id: i + 1 + "",
-  //             value: response.result[i].ticker,
-  //             label: response.result[i].name,
-  //             image: response.result[i].image,
-  //             base: response.result[i].ticker,
-  //             quote: response.result[i].network,
-  //           })
-  //         }
-
-  //       }
-  //     } catch (error) {
-  //       console.error(error.message)
-  //     }
-  //     setLoading(false)
-  //   }
-
-  //   fetchDataTo()
-  // }, [optionsTo])
+  const fetchDataTo = async (selectedOption: any) => {
+    setLoading(true)
+    console.log(selectedOption.value)
+    try {
+      const { data: response } = await axios.get(
+        baseUrlMiddleware +
+          "exchangeapi/changenow/pairs-for?ticker=" +
+          selectedOption.value
+      )
+      console.log(response.result.length)
+      for (var i = 0; response.result.length; i++) {
+        if (response.result[i].ticker === response.result[i].network) {
+          optionsTo[i] = {
+            id: i + 1 + "",
+            value: response.result[i].ticker,
+            label: response.result[i].name,
+            image: response.result[i].image,
+            base: response.result[i].ticker,
+          }
+        } else {
+          optionsTo[i] = {
+            id: i + 1 + "",
+            value: response.result[i].ticker,
+            label: response.result[i].name,
+            image: response.result[i].image,
+            base: response.result[i].ticker,
+            quote: response.result[i].network,
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+    setLoading(false)
+  }
 
   return (
     <div style={{ width: "300px" }}>
@@ -89,56 +110,21 @@ const ChangeNow = () => {
         id="exchange-from-currency"
         value={valueFrom}
         isMulti={false}
-        isClearable={true}
+        isClearable={false}
         options={optionsFrom}
         placeholder="Select a coin"
         noOptionsMessage="No coins found"
         onChange={(selectedOption) => {
           setValueFrom(selectedOption)
-          console.log(selectedOption, valueFrom)
-          const fetchDataTo = async (selectedOption: any) => {
-            setLoading(true)
-            try {
-              if (selectedOption === undefined) return
-              const { data: response } = await axios.get(
-                baseUrlMiddleware +
-                  "exchangeapi/changenow/pairs-for?ticker=" +
-                  selectedOption.value
-              )
-              console.log(response.result.length)
-              for (var i = 0; response.result.length; i++) {
-                if (response.result[i].ticker === response.result[i].network) {
-                  optionsTo.push({
-                    id: i + 1 + "",
-                    value: response.result[i].ticker,
-                    label: response.result[i].name,
-                    image: response.result[i].image,
-                    base: response.result[i].ticker,
-                  })
-                } else {
-                  optionsTo.push({
-                    id: i + 1 + "",
-                    value: response.result[i].ticker,
-                    label: response.result[i].name,
-                    image: response.result[i].image,
-                    base: response.result[i].ticker,
-                    quote: response.result[i].network,
-                  })
-                }
-              }
-            } catch (error) {
-              console.error(error.message)
-            }
-            setLoading(false)
-          }
-          fetchDataTo(selectedOption)
+          console.log(selectedOption)
+          if (selectedOption) fetchDataTo(selectedOption)
         }}
       />
       <Select
         id="exchange-to-currency"
         value={valueTo}
         isMulti={false}
-        isClearable={true}
+        isClearable={false}
         options={optionsTo}
         placeholder="Select a coin"
         noOptionsMessage="No coins found"
