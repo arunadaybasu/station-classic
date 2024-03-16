@@ -15,7 +15,6 @@ const ChangeNow = () => {
         label: "Bitcoin",
         image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg",
         base: "BTC",
-        quote: "USDT",
       },
     ],
     []
@@ -24,11 +23,10 @@ const ChangeNow = () => {
     () => [
       {
         id: "1",
-        value: "BTC",
-        label: "Bitcoin",
-        image: "https://content-api.changenow.io/uploads/btc_1_527dc9ec3c.svg",
-        base: "BTC",
-        quote: "USDT",
+        value: "lunc",
+        label: "Terra Classic",
+        image: "https://content-api.changenow.io/uploads/lunc_8d1dd5b681.svg",
+        base: "lunc",
       },
     ],
     []
@@ -40,6 +38,14 @@ const ChangeNow = () => {
     optionsFrom[0]
   )
   const [valueTo, setValueTo] = useState<Option | Option[] | null>(optionsTo[0])
+  const [quantity, setQuantity] = useState("")
+  const [quantityMin, setQuantityMin] = useState(10000)
+  const [quantityMax, setQuantityMax] = useState(1000000000000)
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
+    console.log(quantity)
+  }
 
   useEffect(() => {
     const fetchDataFrom = async () => {
@@ -48,7 +54,7 @@ const ChangeNow = () => {
         const { data: response } = await axios.get(
           baseUrlMiddleware + "exchangeapi/changenow/currencies"
         )
-        console.log(response.result.length)
+        console.log(response.result)
         for (var i = 0; response.result.length; i++) {
           optionsFrom[i] = {
             id: i + 1 + "",
@@ -130,6 +136,21 @@ const ChangeNow = () => {
         noOptionsMessage="No coins found"
         onChange={(selectedOption) => setValueTo(selectedOption)}
       />
+      <form onSubmit={handleSubmit}>
+        <label>
+          Enter Amount/Quantity:
+          <input
+            id="quantity"
+            name="quantity"
+            type="number"
+            value={quantity}
+            min={quantityMin}
+            max={quantityMax}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </label>
+        <button type="submit">Estimate</button>
+      </form>
     </div>
   )
 }
