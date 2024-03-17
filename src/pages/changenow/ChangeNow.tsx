@@ -40,8 +40,7 @@ const ChangeNow = () => {
   const [valueTo, setValueTo] = useState<Option | Option[] | null>(optionsTo[0])
   const [quantity, setQuantity] = useState("0")
   const [estimate, setEstimate] = useState("0")
-  const [quantityMin, setQuantityMin] = useState(1)
-  const [quantityMax, setQuantityMax] = useState(1000000000000)
+  const [quantityMin, setQuantityMin] = useState(0)
 
   const handleSubmit = async (event: any) => {
     event.preventDefault()
@@ -164,7 +163,7 @@ const ChangeNow = () => {
             type="number"
             value={quantity}
             min={quantityMin}
-            max={quantityMax}
+            step="any"
             onChange={(e) => setQuantity(e.target.value)}
           />
         </label>
