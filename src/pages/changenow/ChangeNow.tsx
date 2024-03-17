@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react"
 import { Select, Option } from "bymax-react-select"
 import axios from "axios"
-// import styles from "./ChangeNow.module.scss"
+// import styles from "./ChangeNow.css"
 
 const ChangeNow = () => {
   // const { t } = useTranslation()
@@ -41,8 +41,11 @@ const ChangeNow = () => {
   const [quantity, setQuantity] = useState("0")
   const [estimate, setEstimate] = useState("0")
   const [quantityMin, setQuantityMin] = useState(0)
+  const [depositAddress, setDepositAddress] = useState("")
+  const [refundAddress, setRefundAddress] = useState("")
+  const [userEmailAddress, setUserEmailAddress] = useState("")
 
-  const handleSubmit = async (event: any) => {
+  const handleEstimate = async (event: any) => {
     event.preventDefault()
     if (valueFrom && valueTo) {
       console.log(quantity, valueFrom, valueTo)
@@ -59,6 +62,27 @@ const ChangeNow = () => {
         console.log(response)
         setQuantityMin(response.result_min_amt.minAmount)
         setEstimate(response.result_estimate.estimatedAmount)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
+  const handleExchange = async (event: any) => {
+    event.preventDefault()
+    if (valueFrom && valueTo) {
+      console.log(quantity, valueFrom, valueTo)
+      try {
+        const { data: response } = await axios.get(
+          baseUrlMiddleware +
+            "exchangeapi/changenow/estimate?from=" +
+            (valueFrom as any).value +
+            "&to=" +
+            (valueTo as any).value +
+            "&amount=" +
+            quantity
+        )
+        console.log(response)
       } catch (error) {
         console.error(error)
       }
@@ -154,31 +178,72 @@ const ChangeNow = () => {
         noOptionsMessage="No coins found"
         onChange={(selectedOption) => setValueTo(selectedOption)}
       />
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter Amount/Quantity:
-          <input
-            id="quantity"
-            name="quantity"
-            type="number"
-            value={quantity}
-            min={quantityMin}
-            step="any"
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </label>
-        <button type="submit">Estimate</button>
-        <p>From: </p>
-        <p>{(valueFrom as any).value}</p>
-        <p>To: </p>
-        <p>{(valueTo as any).value}</p>
-        <p>Quantity/Amount: </p>
-        <p>{quantity}</p>
-        <p>Exchange Estimate: </p>
-        <p>
-          {estimate} {(valueTo as any).value}
-        </p>
-      </form>
+      <label>
+        Enter Amount/Quantity:
+        <input
+          id="quantity"
+          name="quantity"
+          type="number"
+          value={quantity}
+          min={quantityMin}
+          step="any"
+          onChange={(e) => setQuantity(e.target.value)}
+        />
+      </label>
+      <label>
+        Enter {(valueTo as any).value} Deposit Address:
+        <input
+          id="depositAddress"
+          name="depositAddress"
+          type="text"
+          value={depositAddress}
+          onChange={(e) => setDepositAddress(e.target.value)}
+        />
+      </label>
+      <label>
+        Enter {(valueFrom as any).value} Refund Address:
+        <input
+          id="refundAddress"
+          name="refundAddress"
+          type="text"
+          value={refundAddress}
+          onChange={(e) => setRefundAddress(e.target.value)}
+        />
+      </label>
+      <label>
+        Enter Email Address:
+        <input
+          id="userEmailAddress"
+          name="userEmailAddress"
+          type="text"
+          value={userEmailAddress}
+          onChange={(e) => setUserEmailAddress(e.target.value)}
+        />
+      </label>
+      <button type="button" onClick={handleEstimate}>
+        Estimate
+      </button>
+      <button type="button" onClick={handleExchange}>
+        Exchange
+      </button>
+      <p>From: </p>
+      <p>{(valueFrom as any).value}</p>
+      <p>To: </p>
+      <p>{(valueTo as any).value}</p>
+      <p>Quantity/Amount: </p>
+      <p>{quantity}</p>
+      <p>Minimum Quantity/Amount: </p>
+      <p>{quantityMin}</p>
+      <p>Exchange Estimate: </p>
+      <p>
+        {estimate} {(valueTo as any).value}
+      </p>
+      <p>Deposit Address: </p>
+      <p>{depositAddress}</p>
+      <p>Refund Address: </p>
+      <p>{refundAddress}</p>
+      <p>Email Address: </p>
+      <p>{userEmailAddress}</p>
     </div>
   )
 }
