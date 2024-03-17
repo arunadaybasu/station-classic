@@ -38,13 +38,32 @@ const ChangeNow = () => {
     optionsFrom[0]
   )
   const [valueTo, setValueTo] = useState<Option | Option[] | null>(optionsTo[0])
-  const [quantity, setQuantity] = useState("")
-  const [quantityMin, setQuantityMin] = useState(10000)
+  const [quantity, setQuantity] = useState("0")
+  const [estimate, setEstimate] = useState("0")
+  const [quantityMin, setQuantityMin] = useState(1)
   const [quantityMax, setQuantityMax] = useState(1000000000000)
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
-    console.log(quantity)
+    if (valueFrom && valueTo) {
+      console.log(quantity, valueFrom, valueTo)
+      try {
+        const { data: response } = await axios.get(
+          baseUrlMiddleware +
+            "exchangeapi/changenow/estimate?from=" +
+            (valueFrom as any).value +
+            "&to=" +
+            (valueTo as any).value +
+            "&amount=" +
+            quantity
+        )
+        console.log(response)
+        setQuantityMin(response.result_min_amt.minAmount)
+        setEstimate(response.result_estimate.estimatedAmount)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   useEffect(() => {
@@ -54,7 +73,7 @@ const ChangeNow = () => {
         const { data: response } = await axios.get(
           baseUrlMiddleware + "exchangeapi/changenow/currencies"
         )
-        console.log(response.result)
+        // console.log(response.result)
         for (var i = 0; response.result.length; i++) {
           optionsFrom[i] = {
             id: i + 1 + "",
@@ -75,14 +94,14 @@ const ChangeNow = () => {
 
   const fetchDataTo = async (selectedOption: any) => {
     setLoading(true)
-    console.log(selectedOption.value)
+    // console.log(selectedOption.value)
     try {
       const { data: response } = await axios.get(
         baseUrlMiddleware +
           "exchangeapi/changenow/pairs-for?ticker=" +
           selectedOption.value
       )
-      console.log(response.result.length)
+      // console.log(response.result.length)
       for (var i = 0; response.result.length; i++) {
         if (response.result[i].ticker === response.result[i].network) {
           optionsTo[i] = {
@@ -150,6 +169,16 @@ const ChangeNow = () => {
           />
         </label>
         <button type="submit">Estimate</button>
+        <p>From: </p>
+        <p>{(valueFrom as any).value}</p>
+        <p>To: </p>
+        <p>{(valueTo as any).value}</p>
+        <p>Quantity/Amount: </p>
+        <p>{quantity}</p>
+        <p>Exchange Estimate: </p>
+        <p>
+          {estimate} {(valueTo as any).value}
+        </p>
       </form>
     </div>
   )
