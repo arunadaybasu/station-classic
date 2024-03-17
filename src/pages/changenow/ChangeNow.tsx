@@ -159,176 +159,193 @@ const ChangeNow = () => {
 
   return (
     <div className="x-page-container">
-      <p>{loading ? "Loading..." : ""}</p>
-      <Select
-        id="exchange-from-currency"
-        value={valueFrom}
-        isMulti={false}
-        isClearable={false}
-        options={optionsFrom}
-        placeholder="Select a coin"
-        noOptionsMessage="No coins found"
-        onChange={(selectedOption) => {
-          setValueFrom(selectedOption)
-          console.log(selectedOption)
-          if (selectedOption) fetchDataTo(selectedOption)
-        }}
-      />
-      <div className="x-separator-20" />
-      <Select
-        id="exchange-to-currency"
-        value={valueTo}
-        isMulti={false}
-        isClearable={false}
-        options={optionsTo}
-        placeholder="Select a coin"
-        noOptionsMessage="No coins found"
-        onChange={(selectedOption) => setValueTo(selectedOption)}
-      />
-      <div className="x-separator-20" />
-      <label>
-        Enter Amount/Quantity:
-        <input
-          id="quantity"
-          className="x-input-text"
-          name="quantity"
-          type="number"
-          value={quantity}
-          min={quantityMin}
-          step="any"
-          onChange={(e) => setQuantity(e.target.value)}
-        />
-      </label>
-      <div className="x-separator-20" />
-      <label>
-        Enter {(valueTo as any).value} Deposit Address:
-        <input
-          id="depositAddress"
-          className="x-input-text"
-          name="depositAddress"
-          type="text"
-          value={depositAddress}
-          onChange={(e) => setDepositAddress(e.target.value)}
-        />
-      </label>
-      <div className="x-separator-20" />
-      <label>
-        Enter {(valueFrom as any).value} Refund Address:
-        <input
-          id="refundAddress"
-          className="x-input-text"
-          name="refundAddress"
-          type="text"
-          value={refundAddress}
-          onChange={(e) => setRefundAddress(e.target.value)}
-        />
-      </label>
-      <div className="x-separator-20" />
-      <label>
-        Enter Email Address:
-        <input
-          id="userEmailAddress"
-          className="x-input-text"
-          name="userEmailAddress"
-          type="text"
-          value={userEmailAddress}
-          onChange={(e) => setUserEmailAddress(e.target.value)}
-        />
-      </label>
-      <div className="x-separator-20" />
       <div className="x-row-full">
         <div className="x-col-50">
-          <button type="button" onClick={handleEstimate}>
-            Estimate
-          </button>
+          <p>{loading ? "Loading..." : ""}</p>
+          <Select
+            id="exchange-from-currency"
+            value={valueFrom}
+            isMulti={false}
+            isClearable={false}
+            options={optionsFrom}
+            placeholder="Select a coin"
+            noOptionsMessage="No coins found"
+            onChange={(selectedOption) => {
+              setValueFrom(selectedOption)
+              console.log(selectedOption)
+              if (selectedOption) fetchDataTo(selectedOption)
+            }}
+          />
+          <div className="x-separator-20" />
+          <Select
+            id="exchange-to-currency"
+            value={valueTo}
+            isMulti={false}
+            isClearable={false}
+            options={optionsTo}
+            placeholder="Select a coin"
+            noOptionsMessage="No coins found"
+            onChange={(selectedOption) => setValueTo(selectedOption)}
+          />
+          <div className="x-separator-20" />
+          <label>
+            Enter Amount/Quantity:
+            <input
+              id="quantity"
+              className="x-input-text"
+              name="quantity"
+              type="number"
+              value={quantity}
+              min={quantityMin}
+              step="any"
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </label>
+          <div className="x-separator-20" />
+          <label>
+            Enter <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
+            Deposit Address:
+            <input
+              id="depositAddress"
+              className="x-input-text"
+              name="depositAddress"
+              type="text"
+              value={depositAddress}
+              onChange={(e) => setDepositAddress(e.target.value)}
+            />
+          </label>
+          <div className="x-separator-20" />
+          <label>
+            Enter{" "}
+            <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
+            Refund Address:
+            <input
+              id="refundAddress"
+              className="x-input-text"
+              name="refundAddress"
+              type="text"
+              value={refundAddress}
+              onChange={(e) => setRefundAddress(e.target.value)}
+            />
+          </label>
+          <div className="x-separator-20" />
+          <label>
+            Enter Email Address:
+            <input
+              id="userEmailAddress"
+              className="x-input-text"
+              name="userEmailAddress"
+              type="text"
+              value={userEmailAddress}
+              onChange={(e) => setUserEmailAddress(e.target.value)}
+            />
+          </label>
+          <div className="x-separator-20" />
+          <div className="x-row-full x-align-center">
+            <div className="x-col-50">
+              <button
+                type="button"
+                onClick={handleEstimate}
+                className="x-input-button full"
+              >
+                Estimate
+              </button>
+            </div>
+            <div className="x-col-50">
+              <button
+                type="button"
+                onClick={handleExchange}
+                className="x-input-button full"
+              >
+                Exchange
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="x-col-50">
-          <button type="button" onClick={handleExchange}>
-            Exchange
-          </button>
+        <div className="x-col-50 x-exchange-result-box">
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>From: </p>
+            </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">{(valueFrom as any).value}</p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>To: </p>
+            </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">{(valueTo as any).value}</p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Quantity/Amount: </p>
+            </div>
+            <div className="x-col-50">
+              <p>{quantity}</p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Minimum Quantity/Amount: </p>
+            </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">
+                {quantityMin} {(valueFrom as any).value}
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Exchange Estimate: </p>
+            </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">
+                {estimate} {(valueTo as any).value}
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Deposit Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-upper-case x-over-flow">{depositAddress}</p>
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Refund Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-upper-case x-over-flow">{refundAddress}</p>
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Email Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-over-flow">{userEmailAddress}</p>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>From: </p>
-        </div>
-        <div className="x-col-50">
-          <p>{(valueFrom as any).value}</p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>To: </p>
-        </div>
-        <div className="x-col-50">
-          <p>{(valueTo as any).value}</p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Quantity/Amount: </p>
-        </div>
-        <div className="x-col-50">
-          <p>{quantity}</p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Minimum Quantity/Amount: </p>
-        </div>
-        <div className="x-col-50">
-          <p>{quantityMin}</p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Exchange Estimate: </p>
-        </div>
-        <div className="x-col-50">
-          <p>
-            {estimate} {(valueTo as any).value}
-          </p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Deposit Address: </p>
-        </div>
-        <div className="x-col-50">
-          <p>
-            <p>{depositAddress}</p>
-          </p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Refund Address: </p>
-        </div>
-        <div className="x-col-50">
-          <p>
-            <p>{refundAddress}</p>
-          </p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <p>Email Address: </p>
-        </div>
-        <div className="x-col-50">
-          <p>
-            <p>{userEmailAddress}</p>
-          </p>
-        </div>
-      </div>
-      <div className="x-separator-20" />
     </div>
   )
 }
