@@ -2,6 +2,7 @@
 // import { Card, Page } from "components/layout"
 import { useMemo, useState, useEffect } from "react"
 import { Select, Option } from "bymax-react-select"
+import BarLoader from "react-spinners/BarLoader"
 import axios from "axios"
 import "./ChangeNow.css"
 
@@ -159,9 +160,12 @@ const ChangeNow = () => {
 
   return (
     <div className="x-page-container">
+      <div className="x-row-full x-align-center">
+        <BarLoader color="#0046a8" loading={loading} width={"100%"} />
+        <div className="x-separator-20" />
+      </div>
       <div className="x-row-full">
         <div className="x-col-50">
-          <p>{loading ? "Loading..." : ""}</p>
           <Select
             id="exchange-from-currency"
             value={valueFrom}
@@ -262,86 +266,116 @@ const ChangeNow = () => {
             </div>
           </div>
         </div>
-        <div className="x-col-50 x-exchange-result-box">
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>From: </p>
+        <div className="x-col-50">
+          <div className="x-exchange-result-box">
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>From: </p>
+              </div>
+              <div className="x-col-50">
+                <p className="x-upper-case">{(valueFrom as any).value}</p>
+              </div>
             </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{(valueFrom as any).value}</p>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>To: </p>
+              </div>
+              <div className="x-col-50">
+                <p className="x-upper-case">{(valueTo as any).value}</p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Quantity/Amount: </p>
+              </div>
+              <div className="x-col-50">
+                <p>{quantity}</p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Minimum Quantity/Amount: </p>
+              </div>
+              <div className="x-col-50">
+                <p className="x-upper-case">
+                  {quantityMin} {(valueFrom as any).value}
+                </p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Exchange Estimate: </p>
+              </div>
+              <div className="x-col-50">
+                <p className="x-upper-case">
+                  {estimate} {(valueTo as any).value}
+                </p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Deposit Address: </p>
+              </div>
+              <div className="x-col-50">
+                <p>
+                  <p className="x-over-flow">{depositAddress}</p>
+                </p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Refund Address: </p>
+              </div>
+              <div className="x-col-50">
+                <p>
+                  <p className="x-over-flow">{refundAddress}</p>
+                </p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Email Address: </p>
+              </div>
+              <div className="x-col-50">
+                <p>
+                  <p className="x-over-flow">{userEmailAddress}</p>
+                </p>
+              </div>
             </div>
           </div>
           <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>To: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{(valueTo as any).value}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Quantity/Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p>{quantity}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Minimum Quantity/Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {quantityMin} {(valueFrom as any).value}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Exchange Estimate: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {estimate} {(valueTo as any).value}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Deposit Address: </p>
-            </div>
-            <div className="x-col-50">
+          <div className="x-exchange-result-box">
+            <div className="x-row-double">
               <p>
-                <p className="x-upper-case x-over-flow">{depositAddress}</p>
+                Payin Address (
+                <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
+                Address to make payment to):
               </p>
+              <div className="x-address-box">
+                terra1lg85ytn3l78cxkuvh66tvscj2zxnvq55gnvgra
+              </div>
             </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Refund Address: </p>
-            </div>
-            <div className="x-col-50">
+            <div className="x-separator-20" />
+            <div className="x-row-double">
               <p>
-                <p className="x-upper-case x-over-flow">{refundAddress}</p>
+                Payout Address (Your{" "}
+                <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
+                Address):
               </p>
+              <div className="x-address-box">
+                terra1lg85ytn3l78cxkuvh66tvscj2zxnvq55gnvgra
+              </div>
             </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Email Address: </p>
-            </div>
-            <div className="x-col-50">
-              <p>
-                <p className="x-over-flow">{userEmailAddress}</p>
-              </p>
+            <div className="x-row-double">
+              <p>Transaction ID</p>
+              <div className="x-address-box">91390a643e7cfa</div>
             </div>
           </div>
         </div>

@@ -46,6 +46,14 @@
   padding: 10px 50px;
   border: 1px solid lightgray;
   border-radius: 5px;
+  background: #fff;
+  color: #0046a8;
+  transition: 0.3s;
+}
+
+.x-input-button:hover {
+  padding: 10px 50px;
+  border: 1px solid #0046a8;
   background: #0046a8;
   color: #fff;
 }
@@ -65,4 +73,14 @@
 
 .dark .x-exchange-result-box {
   background: #262627;
+}
+
+.x-address-box {
+  text-align: center;
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  overflow-wrap: break-word;
 }
