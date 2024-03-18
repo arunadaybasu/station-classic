@@ -177,13 +177,40 @@ const ChangeNow = () => {
       </div>
       <div className="x-row-full">
         <div className="x-col-50">
+          <div className="x-row-normal">
+            <h1 className="x-page-title">Exchange</h1>
+            <div className="x-separator-20" />
+            <p>
+              Swaps between non-related currencies such as $LUNC & $BTC (which
+              are not on the same blockchain) using an exchange API rather than
+              a blockchain contract as the broker
+            </p>
+            <div className="x-separator-20" />
+            <p>
+              Step 1: Select From & To currencies. Enter amount/quantity to
+              exchange
+            </p>
+            <div className="x-separator-10" />
+            <p>Step 2: Click on Estimate</p>
+            <div className="x-separator-10" />
+            <p>Step 3: Enter Deposit, Refund & Email addresses</p>
+            <div className="x-separator-10" />
+            <p>Step 4: Click on Exchange</p>
+            <div className="x-separator-10" />
+            <p>
+              Step 5: Make payment to Payin Address (write Memo exactly as
+              displayed)
+            </p>
+            <div className="x-separator-20" />
+          </div>
+          <div className="x-separator-20" />
           <Select
             id="exchange-from-currency"
             value={valueFrom}
             isMulti={false}
             isClearable={false}
             options={optionsFrom}
-            placeholder="Select a coin"
+            placeholder="Exchange From Currency"
             noOptionsMessage="No coins found"
             onChange={(selectedOption) => {
               setValueFrom(selectedOption)
@@ -198,7 +225,7 @@ const ChangeNow = () => {
             isMulti={false}
             isClearable={false}
             options={optionsTo}
-            placeholder="Select a coin"
+            placeholder="Exchange To Currency"
             noOptionsMessage="No coins found"
             onChange={(selectedOption) => setValueTo(selectedOption)}
           />
@@ -261,7 +288,7 @@ const ChangeNow = () => {
               <button
                 type="button"
                 onClick={handleEstimate}
-                className="x-input-button full"
+                className="x-input-button w-95"
               >
                 Estimate
               </button>
@@ -270,7 +297,7 @@ const ChangeNow = () => {
               <button
                 type="button"
                 onClick={handleExchange}
-                className="x-input-button full"
+                className="x-input-button w-95"
               >
                 Exchange
               </button>

@@ -4,6 +4,11 @@
   margin: 50px auto;
 }
 
+.x-separator-10 {
+  display: block;
+  height: 10px;
+}
+
 .x-separator-20 {
   display: block;
   height: 20px;
@@ -62,6 +67,10 @@
   width: 100%;
 }
 
+.x-input-button.w-95 {
+  width: 95%;
+}
+
 .x-exchange-result-box {
   padding: 20px;
   font-size: 16px;
@@ -83,4 +92,11 @@
   border: 1px solid lightgray;
   border-radius: 5px;
   overflow-wrap: break-word;
+}
+
+.x-page-title {
+  font-size: 28px;
+  border-bottom: 1px solid #0046a8;
+  width: 100%;
+  padding-bottom: 10px;
 }
