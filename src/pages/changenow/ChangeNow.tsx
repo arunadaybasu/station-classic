@@ -42,9 +42,14 @@ const ChangeNow = () => {
   const [quantity, setQuantity] = useState("0")
   const [estimate, setEstimate] = useState("0")
   const [quantityMin, setQuantityMin] = useState(0)
-  const [depositAddress, setDepositAddress] = useState("")
-  const [refundAddress, setRefundAddress] = useState("")
-  const [userEmailAddress, setUserEmailAddress] = useState("")
+  const [depositAddress, setDepositAddress] = useState("...")
+  const [refundAddress, setRefundAddress] = useState("...")
+  const [userEmailAddress, setUserEmailAddress] = useState("...")
+  const [payinAddress, setPayinAddress] = useState("...")
+  const [payoutAddress, setPayoutAddress] = useState("...")
+  const [finalQuantity, setFinalQuantity] = useState("0")
+  const [payinMemo, setPayinMemo] = useState("...")
+  const [txnId, setTxnId] = useState("...")
 
   const handleEstimate = async (event: any) => {
     event.preventDefault()
@@ -90,6 +95,12 @@ const ChangeNow = () => {
             userEmailAddress
         )
         console.log(response)
+        setPayinAddress(response.result_estimate.payinAddress)
+        setPayoutAddress(response.result_estimate.payoutAddress)
+        setRefundAddress(response.result_estimate.refundAddress)
+        setTxnId(response.result_estimate.id)
+        setFinalQuantity(response.result_estimate.amount)
+        setPayinMemo(response.result_estimate.payinExtraId)
       } catch (error) {
         console.error(error)
       }
@@ -353,14 +364,34 @@ const ChangeNow = () => {
           <div className="x-separator-20" />
           <div className="x-exchange-result-box">
             <div className="x-row-double">
+              <p>Transaction ID</p>
+              <div className="x-address-box">{txnId}</div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-full">
+              <div className="x-col-50">
+                <p>Final Exchange Quantity/Amount: </p>
+              </div>
+              <div className="x-col-50">
+                <p>
+                  {finalQuantity}{" "}
+                  <span className="x-upper-case">{(valueTo as any).value}</span>
+                </p>
+              </div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-double">
               <p>
                 Payin Address (
                 <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
                 Address to make payment to):
               </p>
-              <div className="x-address-box">
-                terra1lg85ytn3l78cxkuvh66tvscj2zxnvq55gnvgra
-              </div>
+              <div className="x-address-box">{payinAddress}</div>
+            </div>
+            <div className="x-separator-20" />
+            <div className="x-row-double">
+              <p>Payin Memo (Write in Memo while making payment):</p>
+              <div className="x-address-box">{payinMemo}</div>
             </div>
             <div className="x-separator-20" />
             <div className="x-row-double">
@@ -369,13 +400,7 @@ const ChangeNow = () => {
                 <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
                 Address):
               </p>
-              <div className="x-address-box">
-                terra1lg85ytn3l78cxkuvh66tvscj2zxnvq55gnvgra
-              </div>
-            </div>
-            <div className="x-row-double">
-              <p>Transaction ID</p>
-              <div className="x-address-box">91390a643e7cfa</div>
+              <div className="x-address-box">{payoutAddress}</div>
             </div>
           </div>
         </div>
