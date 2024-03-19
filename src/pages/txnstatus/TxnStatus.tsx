@@ -4,7 +4,7 @@ import axios from "axios"
 import "./TxnStatus.css"
 
 const ChangeNow = () => {
-  const baseUrlMiddleware = "http://localhost:5737/"
+  const baseUrlMiddleware = "http://station.terraclassic.tech:5737/"
   const [loading, setLoading] = useState(true)
   const [txnStatus, setTxnStatus] = useState("...")
   const [payinAddress, setPayinAddress] = useState("...")
