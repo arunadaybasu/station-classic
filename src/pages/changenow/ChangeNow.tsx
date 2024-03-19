@@ -33,7 +33,7 @@ const ChangeNow = () => {
     []
   )
 
-  const baseUrlMiddleware = "http://station.terraclassic.tech:5737/"
+  const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
   const [loading, setLoading] = useState(true)
   const [valueFrom, setValueFrom] = useState<Option | Option[] | null>(
     optionsFrom[0]
