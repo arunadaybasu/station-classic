@@ -16,6 +16,7 @@ import Wallet from "pages/wallet/Wallet"
 import NFT from "pages/nft/NFT"
 import History from "pages/history/History"
 import ChangeNow from "pages/changenow/ChangeNow"
+import TxnStatus from "pages/txnstatus/TxnStatus"
 import Stake from "pages/stake/Stake"
 import Governance from "pages/gov/Governance"
 import Contract from "pages/contract/Contract"
@@ -81,6 +82,12 @@ export const useNav = () => {
       path: "/exchange",
       element: <ChangeNow />,
       title: t("Exchange"),
+      icon: <SwapIcon {...ICON_SIZE} />,
+    },
+    {
+      path: "/txnstatus",
+      element: <TxnStatus />,
+      title: t("Transaction Status"),
       icon: <SwapIcon {...ICON_SIZE} />,
     },
     {
