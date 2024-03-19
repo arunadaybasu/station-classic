@@ -9,6 +9,8 @@ import { ReactComponent as SwapIcon } from "styles/images/menu/Swap.svg"
 import { ReactComponent as StakeIcon } from "styles/images/menu/Stake.svg"
 import { ReactComponent as GovernanceIcon } from "styles/images/menu/Governance.svg"
 import { ReactComponent as ContractIcon } from "styles/images/menu/Contract.svg"
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange"
+import FindReplaceIcon from "@mui/icons-material/FindReplace"
 
 /* menu */
 import Dashboard from "pages/dashboard/Dashboard"
@@ -82,13 +84,13 @@ export const useNav = () => {
       path: "/exchange",
       element: <ChangeNow />,
       title: t("Exchange"),
-      icon: <SwapIcon {...ICON_SIZE} />,
+      icon: <CurrencyExchangeIcon {...ICON_SIZE} />,
     },
     {
       path: "/txnstatus",
       element: <TxnStatus />,
       title: t("Transaction Status"),
-      icon: <SwapIcon {...ICON_SIZE} />,
+      icon: <FindReplaceIcon {...ICON_SIZE} />,
     },
     {
       path: "/swap",
