@@ -5,6 +5,7 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
+import CircularProgress from "@mui/material/CircularProgress"
 
 import axios from "axios"
 
@@ -12,7 +13,7 @@ import "./TxnStatus.css"
 
 const ChangeNow = () => {
   const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [txnStatus, setTxnStatus] = useState("...")
   const [payinAddress, setPayinAddress] = useState("...")
   const [payoutAddress, setPayoutAddress] = useState("...")
@@ -36,6 +37,7 @@ const ChangeNow = () => {
 
   const handleTxnStatus = async (event: any) => {
     event.preventDefault()
+    setLoading(true)
     if (txnId && txnId !== "" && txnId !== "...") {
       console.log(txnId)
       try {
@@ -57,6 +59,7 @@ const ChangeNow = () => {
         console.error(error)
       }
     }
+    setLoading(false)
   }
 
   return (
@@ -94,6 +97,13 @@ const ChangeNow = () => {
           >
             Status
           </button>
+          {loading && (
+            <CircularProgress
+              sx={{
+                marginLeft: 2,
+              }}
+            />
+          )}
         </div>
       </Grid>
       <Grid xs={4}>

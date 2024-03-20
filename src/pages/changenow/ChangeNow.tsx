@@ -2,7 +2,8 @@
 // import { Card, Page } from "components/layout"
 import { useMemo, useState, useEffect } from "react"
 import { Select, Option } from "bymax-react-select"
-import BarLoader from "react-spinners/BarLoader"
+// import BarLoader from "react-spinners/BarLoader"
+import LinearProgress from "@mui/material/LinearProgress"
 import axios from "axios"
 import "./ChangeNow.css"
 
@@ -34,7 +35,7 @@ const ChangeNow = () => {
   )
 
   const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [valueFrom, setValueFrom] = useState<Option | Option[] | null>(
     optionsFrom[0]
   )
@@ -53,6 +54,7 @@ const ChangeNow = () => {
 
   const handleEstimate = async (event: any) => {
     event.preventDefault()
+    setLoading(true)
     if (valueFrom && valueTo) {
       console.log(quantity, valueFrom, valueTo)
       try {
@@ -72,10 +74,12 @@ const ChangeNow = () => {
         console.error(error)
       }
     }
+    setLoading(false)
   }
 
   const handleExchange = async (event: any) => {
     event.preventDefault()
+    setLoading(true)
     if (valueFrom && valueTo) {
       // console.log(quantity, valueFrom, valueTo)
       try {
@@ -105,6 +109,7 @@ const ChangeNow = () => {
         console.error(error)
       }
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -171,10 +176,6 @@ const ChangeNow = () => {
 
   return (
     <div className="x-page-container">
-      <div className="x-row-full x-align-center">
-        <BarLoader color="#0046a8" loading={loading} width={"100%"} />
-        <div className="x-separator-20" />
-      </div>
       <div className="x-row-full">
         <div className="x-col-50">
           <div className="x-row-normal">
@@ -229,6 +230,14 @@ const ChangeNow = () => {
             noOptionsMessage="No coins found"
             onChange={(selectedOption) => setValueTo(selectedOption)}
           />
+          <div className="x-separator-20" />
+          {loading && (
+            <LinearProgress
+              sx={{
+                width: "100%",
+              }}
+            />
+          )}
           <div className="x-separator-20" />
           <label>
             Enter Amount/Quantity:
