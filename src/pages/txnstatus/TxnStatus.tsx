@@ -1,9 +1,13 @@
 import { useState } from "react"
+
 import Grid from "@mui/material/Unstable_Grid2"
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
+import Divider from "@mui/material/Divider"
+
 import axios from "axios"
+
 import "./TxnStatus.css"
 
 const ChangeNow = () => {
@@ -56,15 +60,7 @@ const ChangeNow = () => {
   }
 
   return (
-    <Grid
-      container
-      spacing={5}
-      xs
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      paddingTop={5}
-    >
+    <Grid container spacing={5} paddingTop={5}>
       <Grid xs={2}></Grid>
       <Grid xs={4}>
         <div className="x-row-normal">
@@ -106,24 +102,38 @@ const ChangeNow = () => {
             <ListItemText primary="Transaction ID:" secondary={txnId} />
           </ListItem>
           <ListItem>
-            <ListItemText primary="Status:" secondary={txnStatus} />
+            <ListItemText
+              primary="Status:"
+              secondary={txnStatus}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
           </ListItem>
           <ListItem>
-            <ListItemText primary="From:" secondary={fromCurrency} />
+            <ListItemText
+              primary="From:"
+              secondary={fromCurrency}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
           </ListItem>
           <ListItem>
-            <ListItemText primary="To:" secondary={toCurrency} />
+            <ListItemText
+              primary="To:"
+              secondary={toCurrency}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
           </ListItem>
           <ListItem>
             <ListItemText
               primary="Expected Send Amount:"
               secondary={expectedSendAmount + " " + fromCurrency}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
             />
           </ListItem>
           <ListItem>
             <ListItemText
               primary="Expected Receive Amount:"
               secondary={expectedReceiveAmount + " " + toCurrency}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
             />
           </ListItem>
           <ListItem>
@@ -132,24 +142,26 @@ const ChangeNow = () => {
           <ListItem>
             <ListItemText primary="Updated At:" secondary={updatedAt} />
           </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemText
+              primary="Payin Address:"
+              secondary={<div className="x-address-box">{payinAddress}</div>}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Payout Address:"
+              secondary={<div className="x-address-box">{payoutAddress}</div>}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Refund Address:"
+              secondary={<div className="x-address-box">{refundAddress}</div>}
+            />
+          </ListItem>
         </List>
-        <div className="x-separator-20" />
-        <div className="x-exchange-result-box">
-          <div className="x-row-double">
-            <p>Payin Address:</p>
-            <div className="x-address-box">{payinAddress}</div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-double">
-            <p>Payout Address:</p>
-            <div className="x-address-box">{payoutAddress}</div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-double">
-            <p>Refund Address:</p>
-            <div className="x-address-box">{refundAddress}</div>
-          </div>
-        </div>
       </Grid>
       <Grid xs={2}></Grid>
     </Grid>
