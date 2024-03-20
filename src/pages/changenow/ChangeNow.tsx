@@ -118,10 +118,10 @@ const ChangeNow = () => {
         for (var i = 0; response.result.length; i++) {
           optionsFrom[i] = {
             id: i + 1 + "",
-            value: response.result[i].ticker,
+            value: response.result[i].legacyTicker,
             label: response.result[i].name,
             image: response.result[i].image,
-            base: response.result[i].ticker,
+            base: response.result[i].legacyTicker,
           }
         }
       } catch (error) {
