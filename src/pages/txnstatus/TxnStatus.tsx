@@ -1,5 +1,8 @@
 import { useState } from "react"
 import Grid from "@mui/material/Unstable_Grid2"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
 import axios from "axios"
 import "./TxnStatus.css"
 
@@ -17,6 +20,15 @@ const ChangeNow = () => {
   const [expectedSendAmount, setExpectedSendAmount] = useState("0")
   const [expectedReceiveAmount, setExpectedReceiveAmount] = useState("0")
   const [createdAt, setCreatedAt] = useState("...")
+
+  const resultListStyle = {
+    width: "100%",
+    padding: 2,
+    bgcolor: "#f0f0f0",
+    borderRadius: 1,
+    border: 1,
+    borderColor: "lightgray",
+  }
 
   const handleTxnStatus = async (event: any) => {
     event.preventDefault()
@@ -46,14 +58,15 @@ const ChangeNow = () => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={5}
       xs
       display="flex"
       justifyContent="center"
       alignItems="center"
-      padding={5}
+      paddingTop={5}
     >
-      <Grid xs={6}>
+      <Grid xs={2}></Grid>
+      <Grid xs={4}>
         <div className="x-row-normal">
           <h1 className="x-page-title">Transaction Status</h1>
           <div className="x-separator-20" />
@@ -87,84 +100,39 @@ const ChangeNow = () => {
           </button>
         </div>
       </Grid>
-      <Grid xs={6}>
-        <div className="x-exchange-result-box">
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Transaction ID: </p>
-            </div>
-            <div className="x-col-50">
-              <p>{txnId}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Status: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{txnStatus}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>From: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{fromCurrency}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>To: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{toCurrency}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Expected Send Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {expectedSendAmount} {fromCurrency}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Expected Receive Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {expectedReceiveAmount} {toCurrency}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Created At: </p>
-            </div>
-            <div className="x-col-50">
-              <p>{createdAt}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Updated At: </p>
-            </div>
-            <div className="x-col-50">
-              <p>{updatedAt}</p>
-            </div>
-          </div>
-        </div>
+      <Grid xs={4}>
+        <List dense sx={resultListStyle}>
+          <ListItem>
+            <ListItemText primary="Transaction ID:" secondary={txnId} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Status:" secondary={txnStatus} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="From:" secondary={fromCurrency} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="To:" secondary={toCurrency} />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Expected Send Amount:"
+              secondary={expectedSendAmount + " " + fromCurrency}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Expected Receive Amount:"
+              secondary={expectedReceiveAmount + " " + toCurrency}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Created At:" secondary={createdAt} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Updated At:" secondary={updatedAt} />
+          </ListItem>
+        </List>
         <div className="x-separator-20" />
         <div className="x-exchange-result-box">
           <div className="x-row-double">
@@ -183,6 +151,7 @@ const ChangeNow = () => {
           </div>
         </div>
       </Grid>
+      <Grid xs={2}></Grid>
     </Grid>
   )
 }
