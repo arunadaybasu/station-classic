@@ -34,8 +34,12 @@ const ChangeNow = () => {
     []
   )
 
-  const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
+  const baseUrlMiddleware = "http://localhost:5737/"
   const [loading, setLoading] = useState(false)
+  const [warningMsgEstimate, setWarningMsgEstimate] = useState(false)
+  const [warningMsgTextEstimate, setWarningMsgTextEstimate] = useState("...")
+  const [warningMsgExchange, setWarningMsgExchange] = useState(false)
+  const [warningMsgTextExchange, setWarningMsgTextExchange] = useState("...")
   const [valueFrom, setValueFrom] = useState<Option | Option[] | null>(
     optionsFrom[0]
   )
@@ -55,7 +59,7 @@ const ChangeNow = () => {
   const handleEstimate = async (event: any) => {
     event.preventDefault()
     setLoading(true)
-    if (valueFrom && valueTo) {
+    if (quantity && quantity !== "0") {
       console.log(quantity, valueFrom, valueTo)
       try {
         const { data: response } = await axios.get(
@@ -68,11 +72,33 @@ const ChangeNow = () => {
             quantity
         )
         console.log(response)
-        setQuantityMin(response.result_min_amt.minAmount)
-        setEstimate(response.result_estimate.estimatedAmount)
+        if (response.status === 200) {
+          setWarningMsgEstimate(false)
+          setQuantityMin(response.result_min_amt.minAmount)
+          setEstimate(response.result_estimate.estimatedAmount)
+          console.log(quantity + " < " + response.result_min_amt.minAmount)
+          if (Number(quantity) < Number(response.result_min_amt.minAmount)) {
+            setWarningMsgEstimate(true)
+            setWarningMsgTextEstimate(
+              "Quantity/Amount entered is less than Minimum"
+            )
+          }
+        } else {
+          setWarningMsgEstimate(true)
+          setWarningMsgTextEstimate(response.error_message.message)
+          if (Number(quantity) < Number(quantityMin)) {
+            setWarningMsgEstimate(true)
+            setWarningMsgTextEstimate(
+              "Quantity/Amount entered is less than Minimum"
+            )
+          }
+        }
       } catch (error) {
         console.error(error)
       }
+    } else {
+      setWarningMsgEstimate(true)
+      setWarningMsgTextEstimate("Please enter valid Quantity/Amount")
     }
     setLoading(false)
   }
@@ -99,12 +125,18 @@ const ChangeNow = () => {
             userEmailAddress
         )
         console.log(response)
-        setPayinAddress(response.result_estimate.payinAddress)
-        setPayoutAddress(response.result_estimate.payoutAddress)
-        setRefundAddress(response.result_estimate.refundAddress)
-        setTxnId(response.result_estimate.id)
-        setFinalQuantity(response.result_estimate.amount)
-        setPayinMemo(response.result_estimate.payinExtraId)
+        if (response.status === 200) {
+          setWarningMsgExchange(false)
+          setPayinAddress(response.result_estimate.payinAddress)
+          setPayoutAddress(response.result_estimate.payoutAddress)
+          setRefundAddress(response.result_estimate.refundAddress)
+          setTxnId(response.result_estimate.id)
+          setFinalQuantity(response.result_estimate.amount)
+          setPayinMemo(response.result_estimate.payinExtraId)
+        } else {
+          setWarningMsgExchange(true)
+          setWarningMsgTextExchange(response.error_message.message)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -311,6 +343,22 @@ const ChangeNow = () => {
                 Exchange
               </button>
             </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full x-align-center">
+            {warningMsgEstimate && (
+              <div className="x-warning-box">
+                ERROR: {warningMsgTextEstimate}
+              </div>
+            )}
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full x-align-center">
+            {warningMsgExchange && (
+              <div className="x-warning-box">
+                ERROR: {warningMsgTextExchange}
+              </div>
+            )}
           </div>
         </div>
         <div className="x-col-50">
