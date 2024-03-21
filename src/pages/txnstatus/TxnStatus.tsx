@@ -12,8 +12,10 @@ import axios from "axios"
 import "./TxnStatus.css"
 
 const ChangeNow = () => {
-  const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
+  const baseUrlMiddleware = "http://localhost:5737/"
   const [loading, setLoading] = useState(false)
+  const [warningMsg, setWarningMsg] = useState(false)
+  const [warningMsgText, setWarningMsgText] = useState("...")
   const [txnStatus, setTxnStatus] = useState("...")
   const [payinAddress, setPayinAddress] = useState("...")
   const [payoutAddress, setPayoutAddress] = useState("...")
@@ -45,16 +47,22 @@ const ChangeNow = () => {
           baseUrlMiddleware + "exchangeapi/changenow/txn-status?txnid=" + txnId
         )
         console.log(response)
-        setTxnStatus(response.result.status)
-        setPayinAddress(response.result.payinAddress)
-        setPayoutAddress(response.result.payoutAddress)
-        setFromCurrency(response.result.fromCurrency)
-        setToCurrency(response.result.toCurrency)
-        setRefundAddress(response.result.refundAddress)
-        setUpdatedAt(response.result.updatedAt)
-        setCreatedAt(response.result.createdAt)
-        setExpectedSendAmount(response.result.expectedSendAmount)
-        setExpectedReceiveAmount(response.result.expectedReceiveAmount)
+        if (response.status === 200) {
+          setTxnStatus(response.result.status)
+          setPayinAddress(response.result.payinAddress)
+          setPayoutAddress(response.result.payoutAddress)
+          setFromCurrency(response.result.fromCurrency)
+          setToCurrency(response.result.toCurrency)
+          setRefundAddress(response.result.refundAddress)
+          setUpdatedAt(response.result.updatedAt)
+          setCreatedAt(response.result.createdAt)
+          setExpectedSendAmount(response.result.expectedSendAmount)
+          setExpectedReceiveAmount(response.result.expectedReceiveAmount)
+          setWarningMsg(false)
+        } else {
+          setWarningMsg(true)
+          setWarningMsgText(response.error_message)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -103,6 +111,12 @@ const ChangeNow = () => {
                 marginLeft: 2,
               }}
             />
+          )}
+        </div>
+        <div className="x-separator-20" />
+        <div className="x-row-full x-align-center">
+          {warningMsg && (
+            <div className="x-warning-box">ERROR: {warningMsgText}</div>
           )}
         </div>
       </Grid>

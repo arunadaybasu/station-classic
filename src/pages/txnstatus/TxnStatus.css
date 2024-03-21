@@ -99,3 +99,15 @@
   width: 100%;
   padding-bottom: 10px;
 }
+
+.x-warning-box {
+  text-align: center;
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+  width: 100%;
+  color: red;
+}
