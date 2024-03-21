@@ -34,7 +34,7 @@ const ChangeNow = () => {
     []
   )
 
-  const baseUrlMiddleware = "http://localhost:5737/"
+  const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
   const [loading, setLoading] = useState(false)
   const [warningMsgEstimate, setWarningMsgEstimate] = useState(false)
   const [warningMsgTextEstimate, setWarningMsgTextEstimate] = useState("...")
@@ -106,7 +106,30 @@ const ChangeNow = () => {
   const handleExchange = async (event: any) => {
     event.preventDefault()
     setLoading(true)
-    if (valueFrom && valueTo) {
+    if (depositAddress === "..." || depositAddress === "") {
+      setWarningMsgExchange(true)
+      setWarningMsgTextExchange("Please enter valid Deposit Address")
+    }
+    if (refundAddress === "..." || refundAddress === "") {
+      setWarningMsgExchange(true)
+      setWarningMsgTextExchange("Please enter valid Refund Address")
+    }
+    if (userEmailAddress === "..." || userEmailAddress === "") {
+      setWarningMsgExchange(true)
+      setWarningMsgTextExchange("Please enter valid Email Address")
+    }
+
+    if (
+      depositAddress &&
+      refundAddress &&
+      userEmailAddress &&
+      depositAddress !== "..." &&
+      refundAddress !== "..." &&
+      userEmailAddress !== "..." &&
+      depositAddress !== "" &&
+      refundAddress !== "" &&
+      userEmailAddress !== ""
+    ) {
       // console.log(quantity, valueFrom, valueTo)
       try {
         const { data: response } = await axios.get(

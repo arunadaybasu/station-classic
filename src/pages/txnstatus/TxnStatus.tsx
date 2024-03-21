@@ -12,7 +12,7 @@ import axios from "axios"
 import "./TxnStatus.css"
 
 const ChangeNow = () => {
-  const baseUrlMiddleware = "http://localhost:5737/"
+  const baseUrlMiddleware = "https://station-middleware.terraclassic.tech/"
   const [loading, setLoading] = useState(false)
   const [warningMsg, setWarningMsg] = useState(false)
   const [warningMsgText, setWarningMsgText] = useState("...")
