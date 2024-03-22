@@ -1,9 +1,15 @@
 // import { useTranslation } from "react-i18next"
 // import { Card, Page } from "components/layout"
 import { useMemo, useState, useEffect } from "react"
-import { Select, Option } from "bymax-react-select"
-// import BarLoader from "react-spinners/BarLoader"
+
+import Grid from "@mui/material/Unstable_Grid2"
 import LinearProgress from "@mui/material/LinearProgress"
+import IconButton from "@mui/material/IconButton"
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+
+import { Select, Option } from "bymax-react-select"
+import { CopyToClipboard } from "react-copy-to-clipboard"
+
 import axios from "axios"
 import "./ChangeNow.css"
 
@@ -230,289 +236,312 @@ const ChangeNow = () => {
   }
 
   return (
-    <div className="x-page-container">
-      <div className="x-row-full">
-        <div className="x-col-50">
-          <div className="x-row-normal">
-            <h1 className="x-page-title">Exchange</h1>
-            <div className="x-separator-20" />
-            <p>
-              Swaps between non-related currencies such as $LUNC & $BTC (which
-              are not on the same blockchain) using an exchange API rather than
-              a blockchain contract as the broker
-            </p>
-            <div className="x-separator-20" />
-            <p>
-              Step 1: Select From & To currencies. Enter amount/quantity to
-              exchange
-            </p>
-            <div className="x-separator-10" />
-            <p>Step 2: Click on Estimate</p>
-            <div className="x-separator-10" />
-            <p>Step 3: Enter Deposit, Refund & Email addresses</p>
-            <div className="x-separator-10" />
-            <p>Step 4: Click on Exchange</p>
-            <div className="x-separator-10" />
-            <p>
-              Step 5: Make payment to Payin Address (write Memo exactly as
-              displayed)
-            </p>
-            <div className="x-separator-20" />
-          </div>
+    <Grid container spacing={5} paddingTop={5}>
+      <Grid xs={2}></Grid>
+      <Grid xs={4}>
+        <div className="x-row-normal">
+          <h1 className="x-page-title">Exchange</h1>
           <div className="x-separator-20" />
-          <Select
-            id="exchange-from-currency"
-            value={valueFrom}
-            isMulti={false}
-            isClearable={false}
-            options={optionsFrom}
-            placeholder="Exchange From Currency"
-            noOptionsMessage="No coins found"
-            onChange={(selectedOption) => {
-              setValueFrom(selectedOption)
-              console.log(selectedOption)
-              if (selectedOption) fetchDataTo(selectedOption)
+          <p>
+            Swaps between non-related currencies such as $LUNC & $BTC (which are
+            not on the same blockchain) using an exchange API rather than a
+            blockchain contract as the broker
+          </p>
+          <div className="x-separator-20" />
+          <p>
+            Step 1: Select From & To currencies. Enter amount/quantity to
+            exchange
+          </p>
+          <div className="x-separator-10" />
+          <p>Step 2: Click on Estimate</p>
+          <div className="x-separator-10" />
+          <p>Step 3: Enter Deposit, Refund & Email addresses</p>
+          <div className="x-separator-10" />
+          <p>Step 4: Click on Exchange</p>
+          <div className="x-separator-10" />
+          <p>
+            Step 5: Make payment to Payin Address (write Memo exactly as
+            displayed)
+          </p>
+          <div className="x-separator-20" />
+        </div>
+        <div className="x-separator-20" />
+        <Select
+          id="exchange-from-currency"
+          value={valueFrom}
+          isMulti={false}
+          isClearable={false}
+          options={optionsFrom}
+          placeholder="Exchange From Currency"
+          noOptionsMessage="No coins found"
+          onChange={(selectedOption) => {
+            setValueFrom(selectedOption)
+            console.log(selectedOption)
+            if (selectedOption) fetchDataTo(selectedOption)
+          }}
+        />
+        <div className="x-separator-20" />
+        <Select
+          id="exchange-to-currency"
+          value={valueTo}
+          isMulti={false}
+          isClearable={false}
+          options={optionsTo}
+          placeholder="Exchange To Currency"
+          noOptionsMessage="No coins found"
+          onChange={(selectedOption) => setValueTo(selectedOption)}
+        />
+        <div className="x-separator-20" />
+        {loading && (
+          <LinearProgress
+            sx={{
+              width: "100%",
             }}
           />
-          <div className="x-separator-20" />
-          <Select
-            id="exchange-to-currency"
-            value={valueTo}
-            isMulti={false}
-            isClearable={false}
-            options={optionsTo}
-            placeholder="Exchange To Currency"
-            noOptionsMessage="No coins found"
-            onChange={(selectedOption) => setValueTo(selectedOption)}
+        )}
+        <div className="x-separator-20" />
+        <label>
+          Enter Amount/Quantity:
+          <input
+            id="quantity"
+            className="x-input-text"
+            name="quantity"
+            type="number"
+            value={quantity}
+            min={quantityMin}
+            step="any"
+            onChange={(e) => setQuantity(e.target.value)}
           />
-          <div className="x-separator-20" />
-          {loading && (
-            <LinearProgress
-              sx={{
-                width: "100%",
-              }}
-            />
+        </label>
+        <div className="x-separator-20" />
+        <label>
+          Enter <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
+          Deposit Address:
+          <input
+            id="depositAddress"
+            className="x-input-text"
+            name="depositAddress"
+            type="text"
+            value={depositAddress}
+            onChange={(e) => setDepositAddress(e.target.value)}
+          />
+        </label>
+        <div className="x-separator-20" />
+        <label>
+          Enter <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
+          Refund Address:
+          <input
+            id="refundAddress"
+            className="x-input-text"
+            name="refundAddress"
+            type="text"
+            value={refundAddress}
+            onChange={(e) => setRefundAddress(e.target.value)}
+          />
+        </label>
+        <div className="x-separator-20" />
+        <label>
+          Enter Email Address:
+          <input
+            id="userEmailAddress"
+            className="x-input-text"
+            name="userEmailAddress"
+            type="text"
+            value={userEmailAddress}
+            onChange={(e) => setUserEmailAddress(e.target.value)}
+          />
+        </label>
+        <div className="x-separator-20" />
+        <div className="x-row-full x-align-center">
+          <div className="x-col-50">
+            <button
+              type="button"
+              onClick={handleEstimate}
+              className="x-input-button w-95"
+            >
+              Estimate
+            </button>
+          </div>
+          <div className="x-col-50">
+            <button
+              type="button"
+              onClick={handleExchange}
+              className="x-input-button w-95"
+            >
+              Exchange
+            </button>
+          </div>
+        </div>
+        <div className="x-separator-20" />
+        <div className="x-row-full x-align-center">
+          {warningMsgEstimate && (
+            <div className="x-warning-box">ERROR: {warningMsgTextEstimate}</div>
           )}
-          <div className="x-separator-20" />
-          <label>
-            Enter Amount/Quantity:
-            <input
-              id="quantity"
-              className="x-input-text"
-              name="quantity"
-              type="number"
-              value={quantity}
-              min={quantityMin}
-              step="any"
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </label>
-          <div className="x-separator-20" />
-          <label>
-            Enter <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
-            Deposit Address:
-            <input
-              id="depositAddress"
-              className="x-input-text"
-              name="depositAddress"
-              type="text"
-              value={depositAddress}
-              onChange={(e) => setDepositAddress(e.target.value)}
-            />
-          </label>
-          <div className="x-separator-20" />
-          <label>
-            Enter{" "}
-            <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
-            Refund Address:
-            <input
-              id="refundAddress"
-              className="x-input-text"
-              name="refundAddress"
-              type="text"
-              value={refundAddress}
-              onChange={(e) => setRefundAddress(e.target.value)}
-            />
-          </label>
-          <div className="x-separator-20" />
-          <label>
-            Enter Email Address:
-            <input
-              id="userEmailAddress"
-              className="x-input-text"
-              name="userEmailAddress"
-              type="text"
-              value={userEmailAddress}
-              onChange={(e) => setUserEmailAddress(e.target.value)}
-            />
-          </label>
-          <div className="x-separator-20" />
-          <div className="x-row-full x-align-center">
-            <div className="x-col-50">
-              <button
-                type="button"
-                onClick={handleEstimate}
-                className="x-input-button w-95"
-              >
-                Estimate
-              </button>
-            </div>
-            <div className="x-col-50">
-              <button
-                type="button"
-                onClick={handleExchange}
-                className="x-input-button w-95"
-              >
-                Exchange
-              </button>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full x-align-center">
-            {warningMsgEstimate && (
-              <div className="x-warning-box">
-                ERROR: {warningMsgTextEstimate}
-              </div>
-            )}
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full x-align-center">
-            {warningMsgExchange && (
-              <div className="x-warning-box">
-                ERROR: {warningMsgTextExchange}
-              </div>
-            )}
-          </div>
         </div>
-        <div className="x-col-50">
-          <div className="x-exchange-result-box">
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>From: </p>
-              </div>
-              <div className="x-col-50">
-                <p className="x-upper-case">{(valueFrom as any).value}</p>
-              </div>
+        <div className="x-separator-20" />
+        <div className="x-row-full x-align-center">
+          {warningMsgExchange && (
+            <div className="x-warning-box">ERROR: {warningMsgTextExchange}</div>
+          )}
+        </div>
+      </Grid>
+      <Grid xs={4}>
+        <div className="x-exchange-result-box">
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>From: </p>
             </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>To: </p>
-              </div>
-              <div className="x-col-50">
-                <p className="x-upper-case">{(valueTo as any).value}</p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Quantity/Amount: </p>
-              </div>
-              <div className="x-col-50">
-                <p>{quantity}</p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Minimum Quantity/Amount: </p>
-              </div>
-              <div className="x-col-50">
-                <p className="x-upper-case">
-                  {quantityMin} {(valueFrom as any).value}
-                </p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Exchange Estimate: </p>
-              </div>
-              <div className="x-col-50">
-                <p className="x-upper-case">
-                  {estimate} {(valueTo as any).value}
-                </p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Deposit Address: </p>
-              </div>
-              <div className="x-col-50">
-                <p>
-                  <p className="x-over-flow">{depositAddress}</p>
-                </p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Refund Address: </p>
-              </div>
-              <div className="x-col-50">
-                <p>
-                  <p className="x-over-flow">{refundAddress}</p>
-                </p>
-              </div>
-            </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Email Address: </p>
-              </div>
-              <div className="x-col-50">
-                <p>
-                  <p className="x-over-flow">{userEmailAddress}</p>
-                </p>
-              </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">{(valueFrom as any).value}</p>
             </div>
           </div>
           <div className="x-separator-20" />
-          <div className="x-exchange-result-box">
-            <div className="x-row-double">
-              <p>Transaction ID</p>
-              <div className="x-address-box">{txnId}</div>
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>To: </p>
             </div>
-            <div className="x-separator-20" />
-            <div className="x-row-full">
-              <div className="x-col-50">
-                <p>Final Exchange Quantity/Amount: </p>
-              </div>
-              <div className="x-col-50">
-                <p>
-                  {finalQuantity}{" "}
-                  <span className="x-upper-case">{(valueTo as any).value}</span>
-                </p>
-              </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">{(valueTo as any).value}</p>
             </div>
-            <div className="x-separator-20" />
-            <div className="x-row-double">
-              <p>
-                Payin Address (
-                <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
-                Address to make payment to):
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Quantity/Amount: </p>
+            </div>
+            <div className="x-col-50">
+              <p>{quantity}</p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Minimum Quantity/Amount: </p>
+            </div>
+            <div className="x-col-50">
+              <p className="x-upper-case">
+                {quantityMin} {(valueFrom as any).value}
               </p>
-              <div className="x-address-box">{payinAddress}</div>
             </div>
-            <div className="x-separator-20" />
-            <div className="x-row-double">
-              <p>Payin Memo (Write in Memo while making payment):</p>
-              <div className="x-address-box">{payinMemo}</div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Exchange Estimate: </p>
             </div>
-            <div className="x-separator-20" />
-            <div className="x-row-double">
-              <p>
-                Payout Address (Your{" "}
-                <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
-                Address):
+            <div className="x-col-50">
+              <p className="x-upper-case">
+                {estimate} {(valueTo as any).value}
               </p>
-              <div className="x-address-box">{payoutAddress}</div>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Deposit Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-over-flow">{depositAddress}</p>
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Refund Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-over-flow">{refundAddress}</p>
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Email Address: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                <p className="x-over-flow">{userEmailAddress}</p>
+              </p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        <div className="x-separator-20" />
+        <div className="x-exchange-result-box">
+          <div className="x-row-double">
+            <p>Transaction ID</p>
+            <div className="x-address-box">
+              {txnId}
+              <CopyToClipboard text={txnId}>
+                <IconButton aria-label="Copy">
+                  <ContentCopyIcon />
+                </IconButton>
+              </CopyToClipboard>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-full">
+            <div className="x-col-50">
+              <p>Final Exchange Quantity/Amount: </p>
+            </div>
+            <div className="x-col-50">
+              <p>
+                {finalQuantity}{" "}
+                <span className="x-upper-case">{(valueTo as any).value}</span>
+              </p>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-double">
+            <p>
+              Payin Address (
+              <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
+              Address to make payment to):
+            </p>
+            <div className="x-address-box">
+              {payinAddress}
+              <CopyToClipboard text={payinAddress}>
+                <IconButton aria-label="Copy">
+                  <ContentCopyIcon />
+                </IconButton>
+              </CopyToClipboard>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-double">
+            <p>Payin Memo (Write in Memo while making payment):</p>
+            <div className="x-address-box">
+              {payinMemo}
+              <CopyToClipboard text={payinMemo}>
+                <IconButton aria-label="Copy">
+                  <ContentCopyIcon />
+                </IconButton>
+              </CopyToClipboard>
+            </div>
+          </div>
+          <div className="x-separator-20" />
+          <div className="x-row-double">
+            <p>
+              Payout Address (Your{" "}
+              <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
+              Address):
+            </p>
+            <div className="x-address-box">
+              {payoutAddress}
+              <CopyToClipboard text={payoutAddress}>
+                <IconButton aria-label="Copy">
+                  <ContentCopyIcon />
+                </IconButton>
+              </CopyToClipboard>
+            </div>
+          </div>
+        </div>
+      </Grid>
+      <Grid xs={2}></Grid>
+    </Grid>
   )
 }
 

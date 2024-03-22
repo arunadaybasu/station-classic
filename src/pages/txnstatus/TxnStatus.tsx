@@ -6,6 +6,10 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
 import CircularProgress from "@mui/material/CircularProgress"
+import IconButton from "@mui/material/IconButton"
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
 import axios from "axios"
 
@@ -170,19 +174,46 @@ const ChangeNow = () => {
           <ListItem>
             <ListItemText
               primary="Payin Address:"
-              secondary={<div className="x-address-box">{payinAddress}</div>}
+              secondary={
+                <div className="x-address-box">
+                  {payinAddress}
+                  <CopyToClipboard text={payinAddress}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText
               primary="Payout Address:"
-              secondary={<div className="x-address-box">{payoutAddress}</div>}
+              secondary={
+                <div className="x-address-box">
+                  {payoutAddress}
+                  <CopyToClipboard text={payoutAddress}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
             />
           </ListItem>
           <ListItem>
             <ListItemText
               primary="Refund Address:"
-              secondary={<div className="x-address-box">{refundAddress}</div>}
+              secondary={
+                <div className="x-address-box">
+                  {refundAddress}
+                  <CopyToClipboard text={refundAddress}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
             />
           </ListItem>
         </List>
