@@ -75,11 +75,11 @@ const ChangeNow = () => {
   }
 
   return (
-    <Grid container spacing={5} paddingTop={5}>
-      <Grid xs={2}></Grid>
-      <Grid xs={4}>
+    <Grid container spacing={5} paddingTop={5} paddingLeft={5} paddingRight={5}>
+      <Grid xs={12} sm={2}></Grid>
+      <Grid xs={12} sm={4}>
         <div className="x-row-normal">
-          <h1 className="x-page-title">Transaction Status</h1>
+          <h1 className="x-page-title">Exchange Transaction Status</h1>
           <div className="x-separator-20" />
           <p>
             Query the transaction status of Exchange transactions here. Enter
@@ -124,7 +124,7 @@ const ChangeNow = () => {
           )}
         </div>
       </Grid>
-      <Grid xs={4}>
+      <Grid xs={12} sm={4}>
         <List dense sx={resultListStyle}>
           <ListItem>
             <ListItemText primary="Transaction ID:" secondary={txnId} />
@@ -218,7 +218,7 @@ const ChangeNow = () => {
           </ListItem>
         </List>
       </Grid>
-      <Grid xs={2}></Grid>
+      <Grid xs={12} sm={2}></Grid>
     </Grid>
   )
 }

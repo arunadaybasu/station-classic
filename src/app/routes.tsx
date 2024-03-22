@@ -87,9 +87,9 @@ export const useNav = () => {
       icon: <CurrencyExchangeIcon {...ICON_SIZE} />,
     },
     {
-      path: "/txnstatus",
+      path: "/exchange-status",
       element: <TxnStatus />,
-      title: t("Transaction Status"),
+      title: t("Exchange Status"),
       icon: <FindReplaceIcon {...ICON_SIZE} />,
     },
     {

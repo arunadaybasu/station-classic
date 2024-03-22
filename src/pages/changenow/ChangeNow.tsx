@@ -3,6 +3,7 @@
 import { useMemo, useState, useEffect } from "react"
 
 import Grid from "@mui/material/Unstable_Grid2"
+import Divider from "@mui/material/Divider"
 import LinearProgress from "@mui/material/LinearProgress"
 import IconButton from "@mui/material/IconButton"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
@@ -236,9 +237,9 @@ const ChangeNow = () => {
   }
 
   return (
-    <Grid container spacing={5} paddingTop={5}>
-      <Grid xs={2}></Grid>
-      <Grid xs={4}>
+    <Grid container spacing={5} paddingTop={5} paddingLeft={5} paddingRight={5}>
+      <Grid xs={12} sm={2}></Grid>
+      <Grid xs={12} sm={4}>
         <div className="x-row-normal">
           <h1 className="x-page-title">Exchange</h1>
           <div className="x-separator-20" />
@@ -259,11 +260,34 @@ const ChangeNow = () => {
           <div className="x-separator-10" />
           <p>Step 4: Click on Exchange</p>
           <div className="x-separator-10" />
+          <p>Step 5: Make payment to Payin Address (write Memo if displayed)</p>
+          <div className="x-separator-10" />
+          <p>Step 6: Copy Transaction ID</p>
+          <div className="x-separator-10" />
           <p>
-            Step 5: Make payment to Payin Address (write Memo exactly as
-            displayed)
+            Step 7: Check status of transaction on{" "}
+            <a href="/exchange-status">Exchange Status</a> page
           </p>
-          <div className="x-separator-20" />
+          <div className="x-separator-10" />
+          <Divider />
+          <div className="x-separator-10" />
+          <p>PLEASE NOTE:</p>
+          <div className="x-separator-10" />
+          <p>
+            If you need help with any transaction, email at:{" "}
+            <a href="mailto:contact@terraclassic.tech">
+              contact@terraclassic.tech
+            </a>{" "}
+            or contact{" "}
+            <a
+              href="https://changenow.io/contact"
+              target="_blank"
+              rel="noreferrer"
+            >
+              ChangeNow Support
+            </a>{" "}
+            directly
+          </p>
         </div>
         <div className="x-separator-20" />
         <Select
@@ -385,7 +409,7 @@ const ChangeNow = () => {
           )}
         </div>
       </Grid>
-      <Grid xs={4}>
+      <Grid xs={12} sm={4}>
         <div className="x-exchange-result-box">
           <div className="x-row-full">
             <div className="x-col-50">
@@ -540,7 +564,7 @@ const ChangeNow = () => {
           </div>
         </div>
       </Grid>
-      <Grid xs={2}></Grid>
+      <Grid xs={12} sm={2}></Grid>
     </Grid>
   )
 }
