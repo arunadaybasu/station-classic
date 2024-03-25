@@ -3,10 +3,15 @@
 import { useMemo, useState, useEffect } from "react"
 
 import Grid from "@mui/material/Unstable_Grid2"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
 import Divider from "@mui/material/Divider"
+import Link from "@mui/material/Link"
 import LinearProgress from "@mui/material/LinearProgress"
 import IconButton from "@mui/material/IconButton"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
+import LaunchIcon from "@mui/icons-material/Launch"
 
 import { Select, Option } from "bymax-react-select"
 import { CopyToClipboard } from "react-copy-to-clipboard"
@@ -62,6 +67,15 @@ const ChangeNow = () => {
   const [finalQuantity, setFinalQuantity] = useState("0")
   const [payinMemo, setPayinMemo] = useState("...")
   const [txnId, setTxnId] = useState("...")
+
+  const resultListStyle = {
+    width: "100%",
+    padding: 2,
+    bgcolor: "#f0f0f0",
+    borderRadius: 1,
+    border: 1,
+    borderColor: "lightgray",
+  }
 
   const handleEstimate = async (event: any) => {
     event.preventDefault()
@@ -410,159 +424,145 @@ const ChangeNow = () => {
         </div>
       </Grid>
       <Grid xs={12} sm={4}>
-        <div className="x-exchange-result-box">
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>From: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{(valueFrom as any).value}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>To: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">{(valueTo as any).value}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Quantity/Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p>{quantity}</p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Minimum Quantity/Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {quantityMin} {(valueFrom as any).value}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Exchange Estimate: </p>
-            </div>
-            <div className="x-col-50">
-              <p className="x-upper-case">
-                {estimate} {(valueTo as any).value}
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Deposit Address: </p>
-            </div>
-            <div className="x-col-50">
-              <p>
-                <p className="x-over-flow">{depositAddress}</p>
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Refund Address: </p>
-            </div>
-            <div className="x-col-50">
-              <p>
-                <p className="x-over-flow">{refundAddress}</p>
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Email Address: </p>
-            </div>
-            <div className="x-col-50">
-              <p>
-                <p className="x-over-flow">{userEmailAddress}</p>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="x-separator-20" />
-        <div className="x-exchange-result-box">
-          <div className="x-row-double">
-            <p>Transaction ID</p>
-            <div className="x-address-box">
-              {txnId}
-              <CopyToClipboard text={txnId}>
-                <IconButton aria-label="Copy">
-                  <ContentCopyIcon />
-                </IconButton>
-              </CopyToClipboard>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-full">
-            <div className="x-col-50">
-              <p>Final Exchange Quantity/Amount: </p>
-            </div>
-            <div className="x-col-50">
-              <p>
-                {finalQuantity}{" "}
-                <span className="x-upper-case">{(valueTo as any).value}</span>
-              </p>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-double">
-            <p>
-              Payin Address (
-              <span className="x-upper-case">{(valueFrom as any).value}</span>{" "}
-              Address to make payment to):
-            </p>
-            <div className="x-address-box">
-              {payinAddress}
-              <CopyToClipboard text={payinAddress}>
-                <IconButton aria-label="Copy">
-                  <ContentCopyIcon />
-                </IconButton>
-              </CopyToClipboard>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-double">
-            <p>Payin Memo (Write in Memo while making payment):</p>
-            <div className="x-address-box">
-              {payinMemo}
-              <CopyToClipboard text={payinMemo}>
-                <IconButton aria-label="Copy">
-                  <ContentCopyIcon />
-                </IconButton>
-              </CopyToClipboard>
-            </div>
-          </div>
-          <div className="x-separator-20" />
-          <div className="x-row-double">
-            <p>
-              Payout Address (Your{" "}
-              <span className="x-upper-case">{(valueTo as any).value}</span>{" "}
-              Address):
-            </p>
-            <div className="x-address-box">
-              {payoutAddress}
-              <CopyToClipboard text={payoutAddress}>
-                <IconButton aria-label="Copy">
-                  <ContentCopyIcon />
-                </IconButton>
-              </CopyToClipboard>
-            </div>
-          </div>
-        </div>
+        <List dense sx={resultListStyle}>
+          <ListItem>
+            <ListItemText
+              primary="From:"
+              secondary={(valueFrom as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="To:"
+              secondary={(valueTo as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Quantity/Amount:"
+              secondary={quantity + " " + (valueFrom as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Minimum Quantity/Amount:"
+              secondary={quantityMin + " " + (valueFrom as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Exchange Estimate:"
+              secondary={estimate + " " + (valueTo as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemText
+              primary="Deposit Address:"
+              secondary={depositAddress}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Refund Address:" secondary={refundAddress} />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Email Address:"
+              secondary={userEmailAddress}
+            />
+          </ListItem>
+          <Divider component="li" />
+          <ListItem>
+            <ListItemText
+              primary="Transaction ID:"
+              secondary={
+                <div className="x-address-box">
+                  {txnId}
+                  <CopyToClipboard text={txnId}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Final Exchange Quantity/Amount:"
+              secondary={finalQuantity + " " + (valueTo as any).value}
+              secondaryTypographyProps={{ textTransform: "uppercase" }}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Payin Address (Address to make payment to):"
+              secondary={
+                <div className="x-address-box">
+                  {payinAddress}
+                  <CopyToClipboard text={payinAddress}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Payin Memo (Write in Memo while making payment):"
+              secondary={
+                <div className="x-address-box">
+                  {payinMemo}
+                  <CopyToClipboard text={payinMemo}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary="Payout Address (Your Address)"
+              secondary={
+                <div className="x-address-box">
+                  {payoutAddress}
+                  <CopyToClipboard text={payoutAddress}>
+                    <IconButton aria-label="Copy">
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </div>
+              }
+            />
+          </ListItem>
+          {txnId && txnId !== "..." && txnId !== "" && (
+            <Link
+              href={"https://changenow.io/exchange/txs/" + txnId}
+              underline="always"
+              target="_blank"
+              rel="noopener"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 1,
+                marginBottom: 1,
+              }}
+            >
+              Complete Transaction on ChangeNOW
+              <LaunchIcon fontSize="small" sx={{ marginLeft: 1 }} />
+            </Link>
+          )}
+        </List>
       </Grid>
       <Grid xs={12} sm={2}></Grid>
     </Grid>
