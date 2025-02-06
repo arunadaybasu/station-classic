@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 @mixin border {
   border: var(--border-width) solid var(--card-border);

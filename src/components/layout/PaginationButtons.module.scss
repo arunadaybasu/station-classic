@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .button {
   border: var(--border-width) solid var(--button-default-bg);

@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../mixins";
 
 .header {
   @include flex(space-between);

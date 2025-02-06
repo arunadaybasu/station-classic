@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .details {
   @include flex(center);

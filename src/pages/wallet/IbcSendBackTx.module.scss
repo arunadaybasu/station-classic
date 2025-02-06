@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .steps__container {
   @include flex(space-between);

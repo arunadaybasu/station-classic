@@ -58,8 +58,7 @@ const ChainFilter = ({
     [network, sortedDisplayChains, displayChains]
   )
 
-  const initNetwork =
-    network[savedChain ?? ""]?.chainID ?? (all ? undefined : chainID)
+  const initNetwork = "columbus-5" // Set default chain to Terra Classic
 
   const [selectedChain, setChain] = useState<string | undefined>(initNetwork)
 

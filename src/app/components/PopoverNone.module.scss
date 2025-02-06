@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../mixins";
 
 .component {
   @include flex-column(space-between, stretch);

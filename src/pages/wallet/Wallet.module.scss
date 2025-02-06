@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .wallet {
   width: min(var(--wallet-width), 100vw);

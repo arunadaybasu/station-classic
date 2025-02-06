@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .address__button {
   @include flex(space-between);

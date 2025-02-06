@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .asset {
   @include flex(space-between, flex-start);

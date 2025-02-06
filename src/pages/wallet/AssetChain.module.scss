@@ -1,4 +1,4 @@
-@import "mixins";
+@import "../app/mixins";
 
 .chain {
   @include flex(space-between, center);
